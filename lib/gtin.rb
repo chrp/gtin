@@ -4,5 +4,5 @@ $:.unshift(File.dirname(__FILE__)) unless
 require "gtin/gtin"
 
 module GTIN
-  VERSION = '0.1.2'
+  VERSION = '0.1.3'
 end
