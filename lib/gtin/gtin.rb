@@ -8,7 +8,7 @@ class Integer
   def odd?
     self & 1 != 0
   end
-   
+
   def even?
     self & 1 == 0
   end
@@ -20,7 +20,7 @@ module GTIN
     return false if self.length != 13
     valid_checksum?
   end
-  
+
   def upc?
     # self = self.to_s.gsub(/[\D]+/, "").split(//)
     return false if self.length != 12
@@ -38,12 +38,12 @@ module GTIN
   def valid_checksum?
     number = self.reverse
     odd = even = 0
-    
+
     (1..number.length-1).each do |i|
       i.even? ? (even += number[i].chr.to_i) : (odd += number[i].chr.to_i)
     end
-    
-    number[0].chr.to_i == (10 - ((odd * 3) + even) % 10)
+
+    number[0].chr.to_i == (10 - ((odd * 3) + even) % 10) % 10
   end
 
 
@@ -53,16 +53,16 @@ module GTIN
   end
   alias :to_upc   :to_gtin_12
   alias :to_upc_a :to_gtin_12
-  
-  
+
+
   # GTIN-8 (EAN/UCC-8): this is an 8-digit number used predominately outside of North America
   def to_gtin_8
     to_gtin(8)
   end
   alias :to_ean_8 :to_gtin_8
   alias :to_ucc_8 :to_gtin_8
-  
-  
+
+
   # GTIN-13 (EAN/UCC-13): this is a 13-digit number used predominately outside of North America
   def to_gtin_13
     to_gtin(13)
@@ -77,7 +77,7 @@ module GTIN
     to_gtin(14)
   end
   alias :to_gtin :to_gtin_14
-  
+
   def to_gtin(size=14)
     "%0#{size.to_i}d" % self.to_s.gsub(/[\D]+/, "").to_i
   end
